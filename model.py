@@ -749,6 +749,9 @@ class ExLlama:
 
             inv_freq = 1.0 / (self.config.rotary_embedding_base ** (torch.arange(0, self.config.head_dim, 2, device = device).float() / self.config.head_dim))
             t = torch.arange(self.config.max_seq_len, device = device, dtype = torch.float32)
+
+            t *= 0.25 
+            
             if self.config.compress_pos_emb != 1.0: t /= self.config.compress_pos_emb
 
             freqs = torch.einsum("i,j->ij", t, inv_freq)
